@@ -6,6 +6,8 @@ async function getMovie(id: string) {
     return response.json();
 }
 export default async function MovieInfo({ id }: { id: string }) {
+    // await new Promise((r) => setTimeout(r, 3000));
+    // throw new Error('...new error');
     const videos = await getMovie(id);
     return <h6>{JSON.stringify(videos)}</h6>;
 }
