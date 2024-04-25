@@ -4,9 +4,20 @@
 // }
 
 import { API_URL } from '@/app/(home)/page';
-import MovieInfo from '@/components/movie-info';
+import MovieInfo, { getMovie } from '@/components/movie-info';
 import MovieVideos from '@/components/movie-videos';
 import { Suspense } from 'react';
+
+interface Iparams {
+    params: { id: string };
+}
+
+export async function generateMetadata({ params: { id } }: Iparams) {
+    const movie: any = await getMovie(id);
+    return {
+        title: movie.title,
+    };
+}
 
 // async function getMovie(id: string) {
 //     await new Promise((r) => setTimeout(r, 5000));
@@ -20,7 +31,7 @@ import { Suspense } from 'react';
 //     return response.json();
 // }
 
-export default async function MovieDetail({ params: { id } }: { params: { id: string } }) {
+export default async function MovieDetail({ params: { id } }: Iparams) {
     // 방법1. promis all을 활용한 병렬적 data fetch
     // const [movie, videos] = await Promise.all([getMovie(id), getVideos(id)]); // 병렬적으로 함수를 실행해줌
     // return <h1>{movie.title} </h1>;
